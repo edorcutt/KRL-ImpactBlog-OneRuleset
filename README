@@ -1,1 +1,13 @@
-Kynetx Impact 2011 Blog demo with one Ruleset
+Kynetx Impact 2011 Blog Eemo with One Ruleset
+
+This project was part of my presentation at Kynetx Impact 2011. The topic of the presentation was on the development of multiple ruleset Kynetx applications. To provide a baseline this version of the impactblog demo uses a single Kynetx ruleset. While this version is not the final goal of the presentation it does provide a none traditional use of the Kynetx event system. Instead of the more traditional mashup which annotates an existing website with external data. In this demo Kynetx is actually used to build the website itself. While I'm not suggesting that Kynetx is the ideal language for development of all web based applications, it can be used for development of web based applications.
+
+In an effort to keep the focus of the demo on the use of Kynetx, and to avoid the distrations of architecting a solution to a new problem domain ... the choice was made to develop a web based blog. Since almost everyone has some level of experience with the functionality of a blog, the focus of the presentation can be on the use of Kynetx. While there's always more than one way to implement a solution, here is the path taken for this project ...
+
+The blog template is treated much like the View in the MVC architecture. With the Kynetx application servering the role of the Controller & Model. The implementation of this approach was done by modifying the blog template to include a series of divs which are initially hidden. The divs correspond to the contents of the Home, About & Post pages. So in essense all of the pages of the application are actually loaded into the browser when the website is first visited. The Controller simply unhides each div (page) in turn when the corresponding navigation link is selected.
+
+The Kynetx application (Controller) is deployed using site tags. Basically just a JavaScript snippet. It's at the bottom of the html file. The initialization of the Controller largely entails binding onclick events to each of the navigation elements, and binding an onsubmit to the Post form. The remainder of the rules with the Kynetx ruleset each respond to these events.
+
+Online Demo: http://www.lobosllc.com/demo/impactblog/blogone.html
+
+Note: Unlike a typical blog only you will be able to see the post that you make. This is intentional since there are no authentication in place. To enable the blog post to be seen by others simply change the Entity variables (ent:) to Application variables (app:).
