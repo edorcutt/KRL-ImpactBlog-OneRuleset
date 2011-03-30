@@ -160,11 +160,10 @@ ruleset a169x273 {
                 "time"   : postTime
             }};
             BlogRoll = ent:BlogRoll || {};
-            BlogRoll = BlogRoll.put(postHash);
         }
         { noop(); }
         fired {
-            set ent:BlogRoll BlogRoll;
+            set ent:BlogRoll BlogRoll.put(postHash);
         }
     }
 }
