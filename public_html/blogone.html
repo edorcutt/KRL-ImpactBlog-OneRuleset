@@ -1,0 +1,115 @@
+<!doctype html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8" />
+  <title>Impact Blog</title>
+  <link href="style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <div id="bodywrap">
+    <section id="pagetop">
+      <p id="siteinfo">Kynetx Impact Blog</p>
+      <nav id="sitenav">
+        <ul>
+          <li><a href="javascript:void(0);" id="siteNavHome">Home</a></li>
+          <li><a href="javascript:void(0);" id="siteNavAbout">About</a></li>
+          <li><a href="javascript:void(0);" id="siteNavPost" style="display:none;">Post</a></li>
+        </ul>
+      </nav>
+    </section>
+
+    <header id="pageheader">
+      <h1>impact<span>blog</span></h1>
+    </header>
+
+    <div id="contents">
+      <section id="main">
+       <div id="leftcontainer">
+
+          <!-- Home ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+          <div class="dynacontainer" id="dynahome" style="display:block;">
+            <h2 class="mainheading">Latest from the blog</h2>
+            <div id="blogroll">Code Monkey was here :)</div>
+          </div>
+
+          <!-- About ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+          <div class="dynacontainer" id="dynaabout" style="display:none;">
+            <h2 class="mainheading">About</h2>
+            <article class="post">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas a diam eget velit fringilla consequat. Duis nec justo urna, at tempus augue. Curabitur tristique, mi vitae ultrices lacinia, ante odio auctor odio, quis bibendum nulla augue quis diam. Aenean commodo justo ac leo cursus porttitor.
+              </p>
+            </article>
+          </div>
+
+          <!-- Post ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+          <div class="dynacontainer" id="dynapost" style="display:none;">
+            <h2 class="mainheading">Post</h2>
+            <article class="post">
+
+  <form onsubmit="return false" method="post" class="form" id="blogform">
+   <p class="textfield">
+       <label for="postauthor">
+          <small>Name</small>
+       </label>
+       <input name="postauthor" id="postauthor" value="" size="22" tabindex="1" type="text">
+   </p>
+   <p class="textfield">
+       <label for="posttitle">
+           <small>Title</small>
+       </label>
+       <input name="posttitle" id="posttitle" value="" size="22" tabindex="2" type="text">
+   </p>
+  <p>
+       <small>Body</small>
+   </p>
+   <p class="text-area">
+       <textarea name="postbody" id="postbody" cols="50" rows="10" tabindex="4"></textarea>
+   </p>
+   <p>
+       <input name="submit" id="submit" tabindex="5" type="image" src="images/submit.png">
+  </p>
+   <div class="clear"></div>
+</form>
+
+            </article>
+          </div>
+
+      </div> <!-- leftcontainer -->
+       <!-- BLOG POST END -->
+
+      </section>  <!-- main -->
+
+      <section id="sidebar">
+        <div id="sidebarwrap">
+          <h2>About ImpactBlog</h2>
+<p>The Kynetx Impact Blog is a demonstration of building web application using multiple KRL rulesets. This version of the Impact Blog is controlled by a single ruleset deployed as a site tag.</p>
+
+        </div>
+      </section>  <!-- sidebar -->
+
+      <div class="clear"></div>
+    </div>
+  </div>  <!-- bodywrap -->
+
+  <footer id="pagefooter">
+    <div id="footerwrap">
+      <div class="copyright">2011 &copy; LOBOSLLC</div>
+      <div class="credit">A Production of <a href="http://www.lobosllc.com">LOBOSLLC</a></div>
+    </div>
+  </footer>
+
+<script type="text/javascript">
+   var d=document;
+   var s=d.createElement('script');
+   s.text='KOBJ_config= {"rids":["a169x273"]} ;';
+   d.body.appendChild(s);
+   var l=d.createElement('script');
+   l.src='http://init.kobj.net/js/shared/kobj-static.js';
+   d.body.appendChild(l);
+</script>
+
+</body>
+</html>
