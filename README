@@ -1,4 +1,4 @@
-Kynetx Impact 2011 Blog Eemo with One Ruleset
+Kynetx Impact 2011 Blog Demo with One Ruleset
 
 This project was part of my presentation at Kynetx Impact 2011. The topic of the presentation was on the development of multiple ruleset Kynetx applications. To provide a baseline this version of the impactblog demo uses a single Kynetx ruleset. While this version is not the final goal of the presentation it does provide a none traditional use of the Kynetx event system. Instead of the more traditional mashup which annotates an existing website with external data. In this demo Kynetx is actually used to build the website itself. While I'm not suggesting that Kynetx is the ideal language for development of all web based applications, it can be used for development of web based applications.
 
