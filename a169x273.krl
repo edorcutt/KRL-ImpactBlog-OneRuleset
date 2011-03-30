@@ -3,16 +3,19 @@ ruleset a169x273 {
         name "KRL-ImpactBlog-OneRuleset"
     	description <<
             Kynetx Impact 2011 Blog demo with one Ruleset
-    http://www.lobosllc.com/demo/impactblog/blogone.html
-    
-        Application Variables:
-            ent:BlogRoll{}
-    >>
-    author "Ed Orcutt, LOBOSLLC"
-    logging on
+            http://www.lobosllc.com/demo/impactblog/blogone.html
+
+            Application Variables:
+              ent:BlogRoll{}
+        >>
+        author "Ed Orcutt, LOBOSLLC"
+        logging on
     }
     
     global {
+        // --------------------------------------------
+        // initial sample blog post
+
         BlogRollInit = { '2011-03-29T15:22:20-00:00' : {
             'author' :'Ed Orcutt',
             'title'  :'First Post',
@@ -23,6 +26,7 @@ ruleset a169x273 {
 
     // ------------------------------------------------------------------------
     // Debug: Just used to clear the blog post data 
+
     rule ImpactBlog_Reset is active {
         select when pageview ".*"
         { noop(); }
@@ -31,6 +35,9 @@ ruleset a169x273 {
         }
     }
     
+    // ------------------------------------------------------------------------
+    // Initialize the blog post hash on the first run
+
     rule ImpactBlog_BlogRoll_init {
         select when pageview ".*"
         pre {
@@ -41,39 +48,13 @@ ruleset a169x273 {
             set ent:BlogRoll BlogRoll;
         }
     }
-    
-    // ------------------------------------------------------------------------
-    // Don't run twice! Hack
-    
-    rule KRUD_CodeMonkey is inactive {
-      select when pageview ".*"
-        pre {
-          tagMonkey = "<div id='CodeMonkey' style='display:none;'>CodeMonkey</div>";
-          CodeMonkey = 0;
-        }
-        {
-          emit <|
-            CodeMonkey = $KOBJ("#CodeMonkey").length;
-            // console.log("CodeMonkey: ", CodeMonkey);
-            if (!CodeMonkey) {
-              $KOBJ("body").append(tagMonkey);
-              app = KOBJ.get_application("a169x273");
-              app.raise_event("impactblog_init", {});
-            }
-          |>;
-          noop();
-        }
-        always {
-          last
-        }
-    }
 
     // ------------------------------------------------------------------------
+    // Initialize the blog page when first run, attach watches to buttons
+
     rule ImpactBlog_Init {
         select when pageview ".*"
-        // select when web impactblog_init
         {
-            // notify("ImpactBlog", "Init running ...") with sticky = true;
             emit <| $K("#siteNavPost").show(); |>;
             watch("#siteNavHome",  "click");
             watch("#siteNavAbout", "click");
@@ -86,10 +67,15 @@ ruleset a169x273 {
     }
     
     // ------------------------------------------------------------------------
+    // Site Navigation button clicked: Home
+
     rule ImpactBlog_SiteNav_Home {
         select when click "#siteNavHome"
         {
+            // flush any blog post displayed
             replace_inner("div#blogroll", "");
+
+            // hide all panel, then show the home panel
             emit <|
                 $K(".dynacontainer").hide('slow');
                 $K("#dynahome").show('slow');
@@ -99,8 +85,38 @@ ruleset a169x273 {
             raise explicit event blog_showall
         }
     }
+        
+    // ------------------------------------------------------------------------
+    // Site Navigation button clicked: About
+
+    rule ImpactBlog_SiteNav_About {
+        select when click "#siteNavAbout"
+        {
+            // hide all panel, then show the about panel
+            emit <|
+                $K(".dynacontainer").hide('slow');
+                $K("#dynaabout").show('slow');
+            |>;
+        }
+    }
     
     // ------------------------------------------------------------------------
+    // Site Navigation button clicked: Post
+
+    rule ImpactBlog_SiteNav_Post {
+        select when click "#siteNavPost"
+        {
+            // hide all panel, then show the post panel
+            emit <|
+                $K(".dynacontainer").hide('slow');
+                $K("#dynapost").show('slow');
+            |>;
+        }
+    }
+
+    // ------------------------------------------------------------------------
+    // Display all blog post in the Home panel
+
     rule ImpactBlog_Blog_ShowAll {
         select when explicit blog_showall
         foreach ent:BlogRoll setting (postKey,postHash)
@@ -123,34 +139,13 @@ ruleset a169x273 {
             >>;
         }
         {
-            // notify("author: ", postAuthor) with sticky = true;
             prepend("div#blogroll", postArticle);
         }
     }
     
     // ------------------------------------------------------------------------
-    rule ImpactBlog_SiteNav_About {
-        select when click "#siteNavAbout"
-        {
-            emit <|
-                $K(".dynacontainer").hide('slow');
-                $K("#dynaabout").show('slow');
-            |>;
-        }
-    }
-    
-    // ------------------------------------------------------------------------
-    rule ImpactBlog_SiteNav_Post {
-        select when click "#siteNavPost"
-        {
-            emit <|
-                $K(".dynacontainer").hide('slow');
-                $K("#dynapost").show('slow');
-            |>;
-        }
-    }
-    
-    // ------------------------------------------------------------------------
+    // Save new blog post in hash
+
     rule ImpactBlog_Blog_Post_Submit {
         select when submit "#blogform"
         pre {
@@ -167,11 +162,7 @@ ruleset a169x273 {
             BlogRoll = ent:BlogRoll || {};
             BlogRoll = BlogRoll.put(postHash);
         }
-        {
-            // notify("author: " + postAuthor, "title: " + postTitle) with sticky = true;
-            // notify("body:", postBody) with sticky = true;
-            noop();
-        }
+        { noop(); }
         fired {
             set ent:BlogRoll BlogRoll;
         }
